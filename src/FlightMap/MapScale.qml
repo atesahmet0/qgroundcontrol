@@ -207,7 +207,9 @@ Item {
         width:              height
         opacity:            0.75
         visible:            _zoomButtonsVisible
-        onClicked:          mapControl.zoomLevel += 0.5
+        onClicked:          {mapControl.zoomLevel += 0.5;
+                             mapControl.setRectangleColor("green");
+        }
     }
 
     QGCButton {
@@ -217,11 +219,33 @@ Item {
         anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
         anchors.left:       zoomUpButton.right
         text:               qsTr("-")
-        width:              height
         opacity:            0.75
         visible:            _zoomButtonsVisible
         onClicked:          mapControl.zoomLevel -= 0.5
     }
+
+    QGCButton {
+        id:					customPlayButton
+        anchors.top:        scaleText.top
+        anchors.bottom:     rightEnd.bottom
+        anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
+        anchors.left:       zoomDownButton.right
+        text: qsTr("Play Video")
+        width: 60
+        onClicked: {mapControl.playVideo();}
+    }
+
+    QGCButton {
+        id:					customPauseButton
+        anchors.top:        scaleText.top
+        anchors.bottom:     rightEnd.bottom
+        anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
+        anchors.left:       customPlayButton.right
+        text: qsTr("Pause Video")
+        width: 60
+        onClicked: {mapControl.pauseVideo();}
+    }
+
 
     Component.onCompleted: {
         if (scale.visible) {
