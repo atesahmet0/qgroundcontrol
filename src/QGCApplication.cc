@@ -550,10 +550,14 @@ void QGCApplication::_initCommon()
 
 bool QGCApplication::_initForNormalAppBoot()
 {
+
     QSettings settings;
 
     _qmlAppEngine = toolbox()->corePlugin()->createQmlApplicationEngine(this);
     toolbox()->corePlugin()->createRootWindow(_qmlAppEngine);
+
+    //TO-DO delete this message
+    showAppMessage("Ben yeni bir rmesajım", "BasLik");
 
     // Image provider for PX4 Flow
     QQuickImageProvider* pImgProvider = dynamic_cast<QQuickImageProvider*>(qgcApp()->toolbox()->imageProvider());
@@ -571,7 +575,6 @@ bool QGCApplication::_initForNormalAppBoot()
     if (msgHandler) {
         msgHandler->showErrorsInToolbar();
     }
-
 
     // Now that main window is up check for lost log files
     connect(this, &QGCApplication::checkForLostLogFiles, toolbox()->mavlinkProtocol(), &MAVLinkProtocol::checkForLostLogFiles);

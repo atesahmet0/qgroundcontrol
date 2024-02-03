@@ -69,12 +69,20 @@ Map {
         customMediaPlayer.play()
     }
 
-    function playVideo() {
+    function playVideo(url) {
+        customMediaPlayer.source = url
         customMediaPlayer.play()
+        // Return error code and string. Error codes and meanings may be found on official docs.
+        return [customMediaPlayer.error, customMediaPlayer.errorString]
     }
 
     function pauseVideo() {
         customMediaPlayer.pause()
+    }
+
+    function getStatus() {
+        console.log(customMediaPlayer.errorString)
+        return customMediaPlayer.error
     }
 
     function _possiblyCenterToVehiclePosition() {
@@ -184,7 +192,7 @@ Map {
 
         MediaPlayer {
             id: customMediaPlayer
-            source: "file:///Users/ates/Desktop/ardaturan.mp4"
+            source: "gst-pipeline: videotestsrc ! qtvideosink"
         }
 
         VideoOutput {

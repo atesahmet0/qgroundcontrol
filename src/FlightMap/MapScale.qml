@@ -9,6 +9,8 @@
 
 import QtQuick          2.3
 import QtQuick.Controls 1.2
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
 import QGroundControl                   1.0
 import QGroundControl.Controls          1.0
@@ -231,8 +233,16 @@ Item {
         anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
         anchors.left:       zoomDownButton.right
         text: qsTr("Play Video")
-        width: 60
-        onClicked: {mapControl.playVideo();}
+        width: 100
+
+        property var result: []
+        onClicked: {
+            result =  mapControl.playVideo(customTextInput.text);
+
+            // If error code is 0 then there is no error, clear text
+            customMediaPlayerErrorText.text = result[0] === 0 ? "" : result[1]
+
+        }
     }
 
     QGCButton {
@@ -242,10 +252,44 @@ Item {
         anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
         anchors.left:       customPlayButton.right
         text: qsTr("Pause Video")
-        width: 60
+        width: 100
         onClicked: {mapControl.pauseVideo();}
     }
 
+    Frame {
+        anchors.top: scaleText.top
+        anchors.left: customPauseButton.right
+        anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
+
+        background: Rectangle{
+            color: "White"
+            border.color: "Black"
+            radius: 2
+        }
+
+        ColumnLayout {
+            /**
+             * Sets customMediaPlayer's source.
+             * Type must be provided eg: rtsp://example.org, https://example.net
+             * GStreamer pipeline may also be provided( Only works on Linux machines )
+             * author: @atesahmet0
+             */
+            TextInput {
+                id: customTextInput
+                anchors.fill: parent
+                text: "Input an URL as rtsp://, file://"
+            }
+
+            // Shows error when there is any
+            Text {
+                id: customMediaPlayerErrorText
+                text: ""
+            }
+        }
+
+
+
+    }
 
     Component.onCompleted: {
         if (scale.visible) {
