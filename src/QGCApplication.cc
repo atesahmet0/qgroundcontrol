@@ -556,9 +556,6 @@ bool QGCApplication::_initForNormalAppBoot()
     _qmlAppEngine = toolbox()->corePlugin()->createQmlApplicationEngine(this);
     toolbox()->corePlugin()->createRootWindow(_qmlAppEngine);
 
-    //TO-DO delete this message
-    showAppMessage("Ben yeni bir rmesajım", "BasLik");
-
     // Image provider for PX4 Flow
     QQuickImageProvider* pImgProvider = dynamic_cast<QQuickImageProvider*>(qgcApp()->toolbox()->imageProvider());
     _qmlAppEngine->addImageProvider(QStringLiteral("QGCImages"), pImgProvider);

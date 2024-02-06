@@ -78,13 +78,6 @@ Rectangle {
             onClicked:              mainWindow.showToolSelectDialog()
         }
 
-        Rectangle {
-            id:					myCustomRectangl
-            color: 				"green"
-            width: 50
-            height: 50
-        }
-
         MainStatusIndicator {
             Layout.preferredHeight: viewButtonRow.height
             visible:                currentToolbar === flyViewToolbar
